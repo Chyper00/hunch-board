@@ -37,6 +37,10 @@ node hunch.mjs mcp
 
 A call at runtime is `=>`. An import, only on a code board, is `rule a -> b`. The one-page grammar is <https://www.hunchboard.dev/grammar>. How to point Claude, ChatGPT, Cursor and Codex at a board is <https://www.hunchboard.dev/use>.
 
+## Benchmark
+
+The same app, built three ways and measured from the outside: [`benchmark/RESULTS.md`](benchmark/RESULTS.md). The full write-up of each run is `benchmark/spend/REPORT.md`, `benchmark/clinic/REPORT.md` and `benchmark/shelf/REPORT.md`.
+
 ## MCP
 
 The server runs on your machine and reads the `board.hunch` in the folder you opened.
