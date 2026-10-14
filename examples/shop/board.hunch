@@ -1,0 +1,8 @@
+title Shop
+client: User "Customer"
+app: Monolith "Shop" "Next.js" "Pages and the API in one deploy"
+db: Relational DB "Orders" "Postgres"
+client => app "places an order" "HTTPS"
+app => db "SQL"
+flow "Order": client => app "places an order", app => db "SQL"
+note "One deployable until a part needs its own scale." [decision status=accepted]

@@ -1,0 +1,8 @@
+{
+  "scopeName": "source.hunch",
+  "patterns": [
+    { "name": "comment.line.hunch", "match": "//.*$" },
+    { "name": "string.quoted.double.hunch", "match": "\"(?:\\\\.|[^\"\\\\])*\"" },
+    { "name": "keyword.control.hunch", "match": "\\b(title|endpoint|entity|style|note|flow|inside|requirement|answer|onion|hexagonal|layered|feature-sliced)\\b" }
+  ]
+}

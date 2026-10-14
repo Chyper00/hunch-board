@@ -1,0 +1,40 @@
+{
+  "name": "hunch-board",
+  "version": "0.13.0",
+  "description": "Hunch Board (hunchboard.dev): board.hunch files. Draw the system, the code shape and the screens, then check them from the terminal.",
+  "type": "module",
+  "bin": {
+    "hunch": "./hunch.mjs",
+    "hunch-board": "./hunch.mjs"
+  },
+  "files": [
+    "hunch.mjs",
+    "SKILL.md",
+    "HUNCH.md",
+    "examples",
+    "llms.txt",
+    "syntaxes"
+  ],
+  "keywords": [
+    "hunch",
+    "hunch-board",
+    "hunchboard",
+    "board.hunch",
+    "architecture",
+    "system-design",
+    "mcp",
+    "agent-skill",
+    "claude",
+    "cursor",
+    "codex"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chyper00/hunch-board.git"
+  },
+  "homepage": "https://www.hunchboard.dev",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

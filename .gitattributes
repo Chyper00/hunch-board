@@ -1,0 +1,3 @@
+*.hunch linguist-detectable=true
+*.hunch linguist-documentation=false
+hunch.mjs linguist-generated=true
