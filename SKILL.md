@@ -460,6 +460,8 @@ One file, Node 20 or newer. `npx hunch-board` is the same file from npm.
 npx hunch-board init             # board.hunch, this skill, and a note in AGENTS.md and CLAUDE.md
 npx hunch-board check --json     # does every line read, and is every file on the board in the folder: { ok, issues }
 npx hunch-board render           # the board as SVG, transparent background, so a chat can show it. Pass boards/api.hunch for that board
+npx hunch-board render --mermaid # the board as a Mermaid flowchart, which GitHub draws in a README or a pull request
+npx hunch-board drift            # services in package.json, requirements.txt, go.mod, docker-compose… that no board shows. --base main only looks at what a change adds. It reads manifests, not the code
 npx hunch-board search telegram  # boards other people shared, to learn from or start from
 npx hunch-board clone order-bot  # copy a public board into a new folder
 npx hunch-board mcp              # an MCP server: read_board, write_board, check_board, render_board, search_community, clone_board

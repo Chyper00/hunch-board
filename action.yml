@@ -1,0 +1,95 @@
+name: Hunch Board drift
+description: Comment on a pull request when it adds a service the board does not show.
+branding:
+  icon: git-pull-request
+  color: yellow
+
+inputs:
+  root:
+    description: The folder that holds board.hunch.
+    default: "."
+  fail-on-drift:
+    description: Fail the check when the board is missing a service. By default it only comments.
+    default: "false"
+  version:
+    description: The version of hunch-board to run.
+    default: "latest"
+  github-token:
+    description: Token used to comment. It needs pull-requests write.
+    default: ${{ github.token }}
+
+outputs:
+  drift:
+    description: "\"true\" when the pull request adds a service the board does not show."
+    value: ${{ steps.drift.outputs.drift }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+
+    - id: drift
+      shell: bash
+      env:
+        BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        HUNCH_ROOT: ${{ inputs.root }}
+        HUNCH_VERSION: ${{ inputs.version }}
+      run: |
+        if [ -z "$BASE_SHA" ]; then
+          echo "::error::This action runs on pull_request events."
+          exit 1
+        fi
+        # A shallow checkout does not hold the base commit.
+        git fetch --quiet --no-tags --depth=1 origin "$BASE_SHA"
+        set +e
+        npx --yes "hunch-board@$HUNCH_VERSION" drift --root "$HUNCH_ROOT" --base "$BASE_SHA" --json > "$RUNNER_TEMP/hunch-drift.json"
+        status=$?
+        set -e
+        if [ "$status" -ge 2 ]; then
+          cat "$RUNNER_TEMP/hunch-drift.json"
+          echo "::error::hunch drift could not compare the board. See the output above."
+          exit "$status"
+        fi
+        if [ "$status" -eq 1 ]; then echo "drift=true" >> "$GITHUB_OUTPUT"; else echo "drift=false" >> "$GITHUB_OUTPUT"; fi
+
+    - shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        DRIFT: ${{ steps.drift.outputs.drift }}
+      run: |
+        marker='<!-- hunch-board-drift -->'
+        body="$RUNNER_TEMP/hunch-drift.md"
+        {
+          echo "$marker"
+          if [ "$DRIFT" = "true" ]; then
+            echo "**Hunch Board:** this pull request adds services the board does not show."
+            echo
+            jq -r '.issues[] | "- **\(.service)**: `\(.dependency)` in `\(.file)`"' "$RUNNER_TEMP/hunch-drift.json"
+            echo
+            echo "Add them to \`board.hunch\`, or remove the dependency. This check reads dependency manifests, not the code."
+          else
+            echo "**Hunch Board:** the board shows every known service this pull request adds."
+          fi
+        } > "$body"
+        cat "$body" >> "$GITHUB_STEP_SUMMARY"
+
+        comments="repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments"
+        existing=$(gh api --paginate "$comments" --jq "[.[] | select(.body | startswith(\"$marker\")) | .id][0] // empty" | head -n 1)
+        # A clean pull request gets no comment, unless it has one to correct.
+        # A fork's token cannot comment, so the job summary above is what remains.
+        if [ -n "$existing" ]; then
+          gh api --method PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$existing" -F body=@"$body" > /dev/null \
+            || echo "::warning::Could not update the comment."
+        elif [ "$DRIFT" = "true" ]; then
+          gh api --method POST "$comments" -F body=@"$body" > /dev/null \
+            || echo "::warning::Could not comment. Give the job pull-requests: write."
+        fi
+
+    - if: ${{ inputs.fail-on-drift == 'true' && steps.drift.outputs.drift == 'true' }}
+      shell: bash
+      run: |
+        echo "::error::This pull request adds services the board does not show."
+        exit 1
