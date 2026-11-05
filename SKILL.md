@@ -460,8 +460,16 @@ One file, Node 20 or newer. `npx hunch-board` is the same file from npm.
 npx hunch-board init             # board.hunch, this skill, and a note in AGENTS.md and CLAUDE.md
 npx hunch-board check --json     # does every line read, and is every file on the board in the folder: { ok, issues }
 npx hunch-board render           # the board as SVG, transparent background, so a chat can show it. Pass boards/api.hunch for that board
-npx hunch-board mcp              # an MCP server: read_board, write_board, check_board, render_board
+npx hunch-board search telegram  # boards other people shared, to learn from or start from
+npx hunch-board clone order-bot  # copy a public board into a new folder
+npx hunch-board mcp              # an MCP server: read_board, write_board, check_board, render_board, search_community, clone_board
 ```
+
+## The community
+
+People share boards at https://www.hunchboard.dev/community. Before designing something from nothing,
+`search` for it: someone may have worked it out, and you can read how. If one fits, offer it to the person
+and `clone` it only if they want it. To publish a board, the person presses Share on the site.
 
 To show the drawing, run `render` (or the `render_board` tool) and display that SVG. Files show as
 named cards there. In Claude Code: `claude mcp add hunch -- npx hunch-board mcp`.

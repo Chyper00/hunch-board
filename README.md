@@ -21,6 +21,8 @@ The same file, with no package registry:
 node hunch.mjs init
 node hunch.mjs check --json
 node hunch.mjs render
+node hunch.mjs search telegram
+node hunch.mjs clone ride-hailing-like-uber
 node hunch.mjs mcp
 ```
 
@@ -36,6 +38,10 @@ node hunch.mjs mcp
 The one-page grammar is <https://www.hunchboard.dev/grammar>. Files on a board live in `assets/` next to it, and the board keeps their path.
 
 Any box can open into a board of its own: `inside api boards/api.hunch` on the outer file is the link. Any technology works as a type: `alerts: Telegram "Alerts"`.
+
+## Community
+
+People share boards at <https://www.hunchboard.dev/community>: Uber, WhatsApp, Netflix, RAG pipelines, SaaS starters and practice for system design interviews. `hunch search` finds them and `hunch clone` copies one into a new folder.
 
 ## MCP
 
@@ -56,7 +62,7 @@ claude mcp add hunch-board -- npx hunch-board mcp
 }
 ```
 
-Tools: `read_board`, `write_board`, `check_board` (`json: true` for `{ ok, issues }`), `render_board`.
+Tools: `read_board`, `write_board`, `check_board` (`json: true` for `{ ok, issues }`), `render_board`, `search_community`, `clone_board`.
 
 ## Names
 
