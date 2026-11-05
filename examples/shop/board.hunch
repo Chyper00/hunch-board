@@ -1,8 +1,21 @@
 title Shop
+
 client: User "Customer"
+bot: Telegram "Order bot"
 app: Monolith "Shop" "Next.js" "Pages and the API in one deploy"
 db: Relational DB "Orders" "Postgres"
+notes: Text file "Checkout notes" [src=assets/notes.md]
+pay: Decision "Paid?"
+order: Class "Order" "" "+id: uuid\n+total: Money\n--\n+cancel(): void"
+launch: Checklist "Before launch" "" "[x] Domain\n[ ] Receipt emails"
+
+inside app boards/app.hunch
+
 client => app "places an order" "HTTPS"
+bot => app "orders by chat" "webhook"
 app => db "SQL"
+app => pay "checkout"
+pay => order "yes"
 flow "Order": client => app "places an order", app => db "SQL"
 note "One deployable until a part needs its own scale." [decision status=accepted]
+note "Do we need guest checkout?" [question]

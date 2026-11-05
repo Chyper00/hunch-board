@@ -1,10 +1,10 @@
 # Hunch Board
 
-Hunch Board (hunchboard.dev): `board.hunch` files. Draw the system, the shape of the code and the screens, then hand that plan to the AI you already use. This repository is the CLI, the skill and a real `board.hunch` an assistant can read without opening the site.
+One free board for planning a project: boxes and arrows, UML, decisions, flowcharts, event storming, C4, screens, checklists, tables, code, images and any other file, with the logos of 200+ technologies. It is one text file, `board.hunch`, so you and the AI you already use read and change the same thing.
 
-The board itself runs at <https://www.hunchboard.dev>.
+The board itself runs at <https://www.hunchboard.dev/board>, with no account. This repository is the CLI, the skill and an example board an assistant can read without opening the site.
 
-## Run the check
+## Run it
 
 Node 20 or newer. Nothing else to install.
 
@@ -13,16 +13,14 @@ npx hunch-board init
 npx hunch-board check --json
 ```
 
-`init` writes `board.hunch`, copies the skill to `.claude/skills/hunch/SKILL.md`, and adds a note to `AGENTS.md` and `CLAUDE.md`, so the next assistant that opens the folder finds Hunch Board.
+`init` writes `board.hunch`, copies the skill to `.claude/skills/hunch/SKILL.md`, and adds a note to `AGENTS.md` and `CLAUDE.md`, so the next assistant that opens the folder finds the board.
 
 The same file, with no package registry:
 
 ```bash
 node hunch.mjs init
 node hunch.mjs check --json
-node hunch.mjs questions
 node hunch.mjs render
-node hunch.mjs pack
 node hunch.mjs mcp
 ```
 
@@ -33,13 +31,11 @@ node hunch.mjs mcp
 | `hunch.mjs` | The CLI. One file. `check --json` prints `{ ok, issues }` for an assistant to correct the lines. |
 | `SKILL.md` | How to read and write a `.hunch` file. |
 | `HUNCH.md` | The short note `init` leaves in a project. |
-| `examples/shop/board.hunch` | A board: a shop, one database, one flow. |
+| `examples/shop/` | A project: a board with a decision, a UML class, a checklist and a file, and a board inside one of its boxes. |
 
-A call at runtime is `=>`. An import, only on a code board, is `rule a -> b`. The one-page grammar is <https://www.hunchboard.dev/grammar>. How to point Claude, ChatGPT, Cursor and Codex at a board is <https://www.hunchboard.dev/use>.
+The one-page grammar is <https://www.hunchboard.dev/grammar>. Files on a board live in `assets/` next to it, and the board keeps their path.
 
-## Benchmark
-
-The same app, built three ways and measured from the outside: [`benchmark/RESULTS.md`](benchmark/RESULTS.md). The full write-up of each run is `benchmark/spend/REPORT.md`, `benchmark/clinic/REPORT.md` and `benchmark/shelf/REPORT.md`.
+Any box can open into a board of its own: `inside api boards/api.hunch` on the outer file is the link. Any technology works as a type: `alerts: Telegram "Alerts"`.
 
 ## MCP
 
@@ -60,7 +56,7 @@ claude mcp add hunch-board -- npx hunch-board mcp
 }
 ```
 
-Tools: `read_board`, `write_board`, `check_code` (`json: true` for `{ ok, issues }`), `open_questions`, `render_board`, `build_pack`.
+Tools: `read_board`, `write_board`, `check_board` (`json: true` for `{ ok, issues }`), `render_board`.
 
 ## Names
 

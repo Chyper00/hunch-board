@@ -1,0 +1,8 @@
+title Inside the Shop app
+
+order: Class "Order" "" "+id: uuid\n--\n+total(): Money"
+item: Class "Item" "" "+price: Money"
+orders: DB table "orders" "" "id uuid pk\ntotal decimal"
+
+order => item "has" [composition]
+order => orders "stored in"
