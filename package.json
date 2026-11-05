@@ -1,7 +1,7 @@
 {
   "name": "hunch-board",
-  "version": "0.13.0",
-  "description": "Hunch Board (hunchboard.dev): board.hunch files. Draw the system, the code shape and the screens, then check them from the terminal.",
+  "version": "1.0.0",
+  "description": "Hunch Board (hunchboard.dev): one free board for planning a project, kept as a text file. Boxes, UML, decisions, screens, checklists, images and any file.",
   "type": "module",
   "bin": {
     "hunch": "./hunch.mjs",
@@ -12,7 +12,6 @@
     "SKILL.md",
     "HUNCH.md",
     "examples",
-    "benchmark",
     "llms.txt",
     "syntaxes"
   ],
@@ -21,8 +20,10 @@
     "hunch-board",
     "hunchboard",
     "board.hunch",
-    "architecture",
-    "system-design",
+    "planning",
+    "diagram",
+    "uml",
+    "flowchart",
     "mcp",
     "agent-skill",
     "claude",

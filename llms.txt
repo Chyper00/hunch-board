@@ -1,10 +1,9 @@
 # Hunch Board
 
-> Hunch Board (hunchboard.dev) is the board file board.hunch: the system, the shape of the code and the screens, handed to the AI the person already uses.
+> Hunch Board (hunchboard.dev) is one free board for planning a project, kept as a text file: board.hunch. Anything can go on it: boxes and arrows, UML, decisions, screens, checklists, images and other files.
 
 - [Skill](SKILL.md): how to read and write a .hunch file
-- [Example](examples/shop/board.hunch): a shop, one database, one flow
+- [Example](examples/shop/board.hunch): a shop with a decision, a UML class, a checklist, a file and a board inside a box
 - [CLI](hunch.mjs): one file, Node 20 or newer. `node hunch.mjs check --json`
-- [Site](https://www.hunchboard.dev): the board in the browser
-- [Use it with Claude, ChatGPT, Cursor and Codex](https://www.hunchboard.dev/use)
+- [Board](https://www.hunchboard.dev/board): opens right away, no account
 - npm package name: hunch-board
